@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOS Sender</title>
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <h1>SOS Sender</h1>
+  <button id="sendSOS">Send SOS</button>
+
+  <script>
+    const SIGNAL_SERVER = "wss://<your-repl-name>.<your-username>.repl.co"; // Change this
+    const ws = new WebSocket(SIGNAL_SERVER);
+
+    ws.onopen = () => console.log("✅ Connected to server");
+
+    ws.onmessage = (event) => {
+      alert("📩 Received: " + event.data);
+    };
+
+    document.getElementById("sendSOS").onclick = () => {
+      ws.send("🚨 SOS 🚨");
+    };
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
